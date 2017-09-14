@@ -1,0 +1,68 @@
+﻿<Window x:Class="ExerciseManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:m="clr-namespace:ExerciseManager.Models"
+        xmlns:local="clr-namespace:ExerciseManager"
+        mc:Ignorable="d"
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        Title="MainWindow" Height="500" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="newroutinebtn" Command="{Binding CreateNewRoutineCommand}" Content="+" Height="40" Width="40"/>
+                <Button x:Name="deleteroutinebtn" Command="{Binding DeleteRoutineCommand}" CommandParameter="{Binding ElementName=routineslistview, Path=SelectedItem}" Content="-" Height="40" Width="40"/>
+            </StackPanel>
+            
+            <ListView x:Name="routineslistview"                      
+                      Grid.Row="1"
+                      ItemsSource="{Binding LiftingManager.Routines}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Label Content="{Binding Name}" Width="250" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="addliftingitem" Command="{Binding CreateNewLiftingItemCommand}" CommandParameter="{Binding ElementName=routineslistview, Path=SelectedItem}" Content="+" Height="40" Width="40"/>
+                <Button x:Name="removeliftingitem" Command="{Binding DeleteLiftingItemCommand}" Content="-" Height="40" Width="40" />
+                <Button x:Name="editliftingitem" Command="{Binding EditLiftingItemCommand}" CommandParameter="{Binding ElementName=routineslistview, Path=SelectedItem}" Content="*" Height="40" Width="40" />
+            </StackPanel>
+            <ListView Grid.Row="1"
+                ItemsSource="{Binding ElementName=routineslistview, Path=SelectedItem.LiftingItems}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Lift.Name}" Width="100"/>
+                            <Label Content="{Binding RepSetDescription}" Width="80"/>
+                            <Label Content="{Binding Weight.Amount}" Width="40"/>
+                            <Label Content="{Binding CategoryLift}" Width="70" />
+                            <Label Content="{Binding TypeOfLift}" Width="80" />
+                            <Label Content="{Binding PushPullLift}" Width="50" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+</Window>

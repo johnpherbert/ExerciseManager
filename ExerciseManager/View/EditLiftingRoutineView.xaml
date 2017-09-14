@@ -1,0 +1,56 @@
+﻿<Window x:Class="ExerciseManager.View.EditLiftingRoutineView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Converters="clr-namespace:ExerciseManager.Converters"
+        xmlns:m="clr-namespace:ExerciseManager.Models"
+        xmlns:local="clr-namespace:ExerciseManager.View"
+        DataContext="{Binding EditRoutine, Source={StaticResource Locator}}"                                
+        mc:Ignorable="d"
+        Title="EditLiftingRoutineView" Height="500" Width="800">
+    <Window.Resources>
+        <Converters:EnumToIndexConverrter x:Key="enumtoindexconverter" />
+        <Converters:BasedOnAmountToEnabledConverter x:Key="basedonamounttoenabledconverter" />
+        <Converters:BasedOnAmountToVisibilityConverter x:Key="basedonamounttovisiblityconverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBox Text="{Binding LiftingRoutine.Name}" Width="100" />
+            <ComboBox Width="100"
+                      ItemsSource="{Binding LiftingRoutine.DaysOfTheWeek}" 
+                      SelectedItem="{Binding LiftingRoutine.DayOfWeek}"/>
+        </StackPanel>
+        <ListView Grid.Row="1"
+            ItemsSource="{Binding LiftingRoutine.LiftingItems}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Width="100" Text="{Binding Lift.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBox Width="100" Text="{Binding RepSetDescription}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <TextBox Width="100" Text="{Binding Weight.Amount}" IsEnabled="{Binding Weight.BasedOnThisLift, Converter={StaticResource basedonamounttoenabledconverter}}"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Button Width="15" Content="->" 
+                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}, Path=DataContext.BasedOnAmountCommand}"
+                                CommandParameter="{Binding}"/>
+
+
+                        <StackPanel Width="200" Orientation="Horizontal" Visibility="{Binding Weight.BasedOnThisLift, Converter={StaticResource basedonamounttovisiblityconverter}}">
+                            <Label Content="{Binding Weight.BasedOnThisLift.Lift.Name}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Label Content="{Binding Weight.BasedOnThisLift.Weight.Amount}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <TextBox Width="30" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Weight.Percent, StringFormat={}{0}%}" />
+                        </StackPanel>
+                        
+                        <ComboBox Width="100" ItemsSource="{Binding TypeOfLifts}" SelectedItem="{Binding CategoryLift}"/>
+                        <ComboBox Width="100" ItemsSource="{Binding PushPullLifts}" SelectedItem="{Binding PushPullLift}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>
