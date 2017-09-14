@@ -8,12 +8,12 @@ Desktop.ini
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
-.vs
-ExerciseManager\bin
-ExerciseManager\obj
+.vs/
+ExerciseManager/bin
+ExerciseManager/obj
 
-ExerciseTest\bin
-ExerciseTest\obj
+ExerciseTest/bin
+ExerciseTest/obj
 
 
 # Windows Installer files
@@ -56,6 +56,5 @@ Temporary Items
 *.pdb
 *.baml
 *.cache
-SimpleMusicPlayer/obj/Debug/SimpleMusicPlayer.csprojResolveAssemblyReference.cache
 *.pdb
 *.lref

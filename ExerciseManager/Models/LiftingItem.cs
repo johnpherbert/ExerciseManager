@@ -41,6 +41,7 @@ namespace ExerciseManager.Models
             {
                 sets = value;
                 NotifyPropertyChanged("Sets");
+                NotifyPropertyChanged("RepSetDescription");
             }
         }
 
@@ -52,6 +53,7 @@ namespace ExerciseManager.Models
             {
                 reps = value;
                 NotifyPropertyChanged("Reps");
+                NotifyPropertyChanged("RepSetDescription");
             }
         }
 
@@ -100,18 +102,30 @@ namespace ExerciseManager.Models
             }
         }
 
+        private string notes;
+        public string Notes
+        {
+            get { return notes; }
+            set
+            {
+                notes = value;
+                NotifyPropertyChanged("Notes");
+            }
+        }
+
         public LiftingItem()
         {
         }
 
-        public LiftingItem(Lift inLift, int inSets, Range inReps, Weight inWeight, string tol, string ppl)
+        public LiftingItem(Lift inLift, int inSets, Range inReps, Weight inWeight, string tol, string ppl, string notes)
         {
             Lift = inLift;
             Sets = inSets;
             Reps = inReps;
             Weight = inWeight;
             TypeOfLift = tol;
-            PushPullLift = ppl;            
+            PushPullLift = ppl;
+            Notes = notes;
         }
 
         private string FormatRepSetString()

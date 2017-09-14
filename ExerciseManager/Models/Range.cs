@@ -8,9 +8,29 @@ namespace ExerciseManager.Models
 {
     public class Range
     {
-        public int Min { get; set; }
+        private int min;
+        public int Min
+        {
+            get { return min; }
+            set
+            {
+                min = value;
+                if (max == 0)
+                    max = min;
+                SetupArray();
+            }
+        }
 
-        public int Max { get; set; }
+        private int max;
+        public int Max
+        {
+            get { return max; }
+            set
+            {
+                max = value;
+                SetupArray();
+            }
+        }
 
         public int Count { get { return rangearray.Length; } }
 
@@ -51,6 +71,10 @@ namespace ExerciseManager.Models
                 rangearray[i] = countingmin;
                 countingmin++;
             }
+        }
+
+        public Range()
+        {
         }
     }
 }

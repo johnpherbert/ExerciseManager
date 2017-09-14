@@ -11,6 +11,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
@@ -18,17 +19,19 @@
         <StackPanel Orientation="Horizontal" Grid.Row="1">
             <Label Width="100" Content="{Binding LiftingItem.Lift.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Label Width="100" Content="{Binding LiftingItem.Weight.Amount, StringFormat={}{0:00}}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBox Width="100" Text="{Binding LiftingItem.Weight.Percent,StringFormat={}{0} %}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBox Width="100" Text="{Binding LiftingItem.Weight.PercentDescription, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Label Width="100" Content="{Binding LiftingItem.Weight.BasedOnThisLift.Lift.Name}"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </StackPanel>
-        
-        <ListView Grid.Row="2"
-                  ItemsSource="{Binding AllLifts}"
+
+        <TextBox Grid.Row="2" Text="{Binding AllLiftFilter, UpdateSourceTrigger=PropertyChanged}" />
+        <ListView Grid.Row="3"
+                  ItemsSource="{Binding AllLiftView}"
                   SelectedItem="{Binding LiftingItem.Weight.BasedOnThisLift}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Label Width="200" Content="{Binding Lift.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Label Width="100" Content="{Binding RepSetDescription}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <Label Width="100" Content="{Binding Weight.Amount}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </StackPanel>
                 </DataTemplate>

@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ExerciseManager"
         mc:Ignorable="d"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
-        Title="MainWindow" Height="500" Width="800">
+        Title="MainWindow" Height="800" Width="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
@@ -45,20 +45,21 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="addliftingitem" Command="{Binding CreateNewLiftingItemCommand}" CommandParameter="{Binding ElementName=routineslistview, Path=SelectedItem}" Content="+" Height="40" Width="40"/>
-                <Button x:Name="removeliftingitem" Command="{Binding DeleteLiftingItemCommand}" Content="-" Height="40" Width="40" />
+                <Button x:Name="removeliftingitem" Command="{Binding DeleteLiftingItemCommand}" CommandParameter="{Binding ElementName=liftingitemsview, Path=SelectedItem}" Content="-" Height="40" Width="40" />
                 <Button x:Name="editliftingitem" Command="{Binding EditLiftingItemCommand}" CommandParameter="{Binding ElementName=routineslistview, Path=SelectedItem}" Content="*" Height="40" Width="40" />
             </StackPanel>
-            <ListView Grid.Row="1"
+            <ListView x:Name="liftingitemsview" Grid.Row="1"
                 ItemsSource="{Binding ElementName=routineslistview, Path=SelectedItem.LiftingItems}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <Label Content="{Binding Lift.Name}" Width="100"/>
+                            <Label Content="{Binding Lift.Name}" Width="150"/>
                             <Label Content="{Binding RepSetDescription}" Width="80"/>
                             <Label Content="{Binding Weight.Amount}" Width="40"/>
                             <Label Content="{Binding CategoryLift}" Width="70" />
                             <Label Content="{Binding TypeOfLift}" Width="80" />
-                            <Label Content="{Binding PushPullLift}" Width="50" />
+                            <Label Content="{Binding PushPullLift}" Width="100" />
+                            <Label Content="{Binding Notes}" Width="400" />
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -56,9 +56,32 @@ namespace ExerciseManager.Models
             get { return percent * 100; }
             set
             {
-                percent = value;
+                percent = value / 100;
+
+                if (percent == 0)
+                    WeightType = WeightType.Static;
+                else
+                    WeightType = WeightType.Percent;
+                
                 NotifyPropertyChanged("Amount");
                 NotifyPropertyChanged("Percent");
+                NotifyPropertyChanged("PercentDescription");
+            }
+        }
+
+        public string PercentDescription
+        {
+            get
+            {
+                return Percent.ToString() + " %";
+            }
+            set
+            {                
+                if (double.TryParse(value.Replace("%", "").Trim(), out double result))
+                {
+                    Percent = result;
+                }
+                NotifyPropertyChanged("PercentDescription");
             }
         }
 
@@ -74,7 +97,7 @@ namespace ExerciseManager.Models
 
         public Weight(double inPercent, LiftingItem basedOn)
         {
-            Percent = inPercent * .01;
+            Percent = inPercent;
             WeightType = WeightType.Percent;
             BasedOnThisLift = basedOn;
         }

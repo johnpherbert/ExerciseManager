@@ -27,9 +27,12 @@ namespace ExerciseManager.ViewModel
 
         public void BasedOnAmount(LiftingItem liftingitem)
         {
+            liftingitem.Weight.BasedOnThisLift = new LiftingItem();
+
             var allliftsvm = SimpleIoc.Default.GetInstance<AllLiftsViewModel>();
             allliftsvm.LiftingItem = liftingitem;
             allliftsvm.LiftingManager = LiftingManager;
+            allliftsvm.LoadAllLifts();            
 
             var allliftsview = new AllLiftsView()
             {
